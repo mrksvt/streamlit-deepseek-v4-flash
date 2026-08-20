@@ -1,26 +1,3 @@
-import sys
-import subprocess
-import importlib.util
-
-
-def install_package(package):
-    if importlib.util.find_spec(package) is None:
-        print(f"📦 {package} belum terinstall. Menginstall...")
-        subprocess.check_call([
-            sys.executable,
-            "-m",
-            "pip",
-            "install",
-            "-U",
-            package,
-        ])
-
-
-# Install dependency otomatis
-install_package("transformers")
-install_package("torch")
-
-
 import streamlit as st
 from transformers import pipeline
 
@@ -38,6 +15,7 @@ def load_model():
     return pipeline(
         "text-generation",
         model="deepseek-ai/DeepSeek-V4-Flash",
+        device_map="auto",
     )
 
 
